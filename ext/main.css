@@ -1,0 +1,61 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {width: 9px;height: 16px;background-color: #F5F5F5;}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius: 10px;background-color: #F5F5F5;}
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {border-radius: 10px;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);background-color: #b0b0b0;}
+html{width:100%;height:100%;}
+body{margin:0;position: fixed;width:100%;height: 100%;}
+
+.nav{height:40px;background: rgb(248, 248, 248);border-bottom: 1px solid silver;}
+.navbar{height: 100%; width: 100%; background: #222; color: white; padding: 0 15px; line-height: 40px;}
+.navbar .logoDiv{float: left; letter-spacing: 3px; padding: 0 15px; font-size: 17pt; font-weight: bolder;}
+.navbar .logoDiv span{color: #c1c1c1; cursor: default; font-size: 22pt}
+.navbar-nav{padding-left: 60px; margin-top: -40px }
+.navbar-nav .nav-items{padding-left: 50px; list-style-type: none;margin-bottom: 0;}
+.navbar a{color: rgb(157, 157, 157)!important;cursor: pointer;}
+.navbar a:hover{color: #fff!important;}
+.navbar>div>ul>li>a{float:left;text-decoration: none;  font-size: 10pt; padding: 0px 15px; display: block;}
+.dropdown-menu{background: #222121;}
+.dropdown-item:focus, .dropdown-item:hover,.dropdown-item:active { background-color: #48484f;}
+
+.pager{ padding: 60px 100px 120px 100px;width: 100%;height: 100%;position: absolute;}
+@media screen and (min-width:1300px) {  .pager{padding:60px 150px 0 150px;}  }
+@media screen and (min-width:1400px) {  .pager{padding:60px 200px 0 200px;}  }
+@media screen and (min-width:1550px) {  .pager{padding:60px 300px 0 300px;}  }
+@media screen and (min-width:900px) {  .pager{padding:60px 30px 0 30px;}  }
+@media screen and (max-width:899px) {  .pager{padding:60px 30px 0 30px;}  }
+.pager .tip{padding:10px 20px 10px 10px;font-size: 10pt;}
+.content{font-size: 14pt;padding: 60px;margin: 0;width: 100%;height: calc(100% - 110px);border: 1px solid silver;border-radius: 5px;min-height: 400px;}
+#root{width:100%;height:100%;}
+
+
+
+
+/* ========================================== vip视频解析部分 ===================================================== */
+@media screen and (max-width:600px) { .pager-VIPJX.pager{padding:0;height: 500px;}  }
+@media screen and (max-width:400px) {  .pager-VIPJX.pager{padding:0;height: 400px;}}
+.pager-VIPJX .videoIframediv,.sm-nopading{padding:0;} 
+.pager-VIPJX optgroup{font-style: italic;color:silver;}
+.pager-VIPJX optgroup>option,option{font-style: normal;color:gray;}
+.pager-VIPJX .control{width:100%;height:80px;margin-top: 20px;padding:0 15px;}
+.pager-VIPJX .magicbtns{padding:8px 0;overflow: hidden;}
+.pager-VIPJX .videoIframediv{padding: 15px 15px;margin:0;width:100%;height:calc(100% - 180px);border:1px solid silver;border-radius: 5px;}
+.pager-VIPJX.pager .videoIframediv iframe{background: black;border-radius: 2px;border-style: hidden;width:100%;height: 100%;}
+.videomodel .nav{border-bottom: 0;}
+.videomodel .pager-VIPJX.pager,.videomodel .pager.pager-VIPJX .videoIframediv{padding:0;border:0}
+.videomodel .pager-VIPJX.pager .tip{display: none;}
+.videomodel .pager-VIPJX.pager .videoIframediv{height: calc(100% - 80px);background: black;border:0;}
+.videomodel .pager-VIPJX.pager .control{margin-top:0;background:black; padding-left: 19px;}
+.videomodel .pager-VIPJX.pager .control input,.videomodel .pager.pager-VIPJX .control select{background: #2f2e2e;color:#766986;border-color:#6f6b6b;font-weight: 100;font-family: monospace;font-size:1.1rem;}
+
+/* ========================================== 磁链转换部分 ===================================================== */
+.page-CLZH .url{width:400px;margin-top: 8px;font-size: 9pt;padding:1px 2px;border: 1px solid #aaa6a6;height:27px;}
+.pager.page-CLZH .content>*{vertical-align: bottom;}
+
+/* ========================================== 金融转换部分 ===================================================== */
+.page-JRZH .price {width: 400px;margin-top: 8px;font-size: 12pt;border: 1px solid #aaa6a6;line-height: 2em;padding: 1px 12px;color: #858585;}
+
+/* ========================================== 视频转换gif部分 ===================================================== */
+.page-SPZGIF .content{overflow: auto;}
+.page-SPZGIF .captures{overflow-x: auto; display: flex; padding: 5px 0;}

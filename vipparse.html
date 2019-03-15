@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vip Parse</title>
+    <link rel="icon" href="./ext/n.ico" type="image/x-icon"/>
+    <meta name="Keywords" content="vip解析,个人使用请勿用于商用传播">
+    <meta name="Description" content="vip解析,个人使用请勿用于商用传播">
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+    <link rel="stylesheet" href="./ext/main.css">
+
+</head>
+<body>
+<div id="root"></div>
+
+</body>
+
+<script type="text/babel" src="./ext/navbar.js"></script>
+<script type="text/babel">
+    class MainLayout extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state={
+                isFull:false,
+                vipParser:[],
+            }
+        }
+        componentWillMount(){
+            this.setState({vipParser:[
+                
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"https://www.jqaaa.com/jx.php?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"https://2wk.com/vip.php?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://api.zuilingxian.com/jx.php?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://api.pucms.com/jx/api/?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"https://5.5252e.com/jx/b.php?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://api.wlzhan.com/sudu/?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"https://jx.618g.com/?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://vip.jlsprh.com/index.php?url=",newTab:true},
+                
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://030e.com/api.php?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:true ,url:"http://vip.tt-hk.cn/beac.php?url="},
+                {tengxun:true ,youku:false,iqiyi:false,mangguo:true ,url:"https://jx.000180.top/180/?url="},
+                {tengxun:false,youku:true ,iqiyi:false,mangguo:true ,url:"http://jx.vgoodapi.com/jx.php?url="},
+                {tengxun:false,youku:true ,iqiyi:false,mangguo:true ,url:"http://000o.cc/jx/ty.php?url="},
+                
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:false,url:"http://beaacc.com/vip1/0301/?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:false,url:"https://api.flvsp.com/?url="},
+                {tengxun:true ,youku:true ,iqiyi:false,mangguo:false,url:"https://beaacc.com/21/?url="},
+                {tengxun:true ,youku:false,iqiyi:false,mangguo:true ,url:"http://v.2gty.com/apiurl/yun.php?url="},
+                {tengxun:true ,youku:false,iqiyi:false,mangguo:true ,url:"http://api.xfsub.com/index.php?url=&url="},
+                {tengxun:false,youku:true ,iqiyi:false,mangguo:false,url:"http://yun.baiyug.cn/vip/?url="},
+                {tengxun:false,youku:true ,iqiyi:false,mangguo:false,url:"http://jvip.zz22x.com/jx/?url="},
+                {tengxun:false,youku:false,iqiyi:false,mangguo:true ,url:"https://5.5252e.com/p/iqiyi.php?url="},
+                
+                {tengxun:false,youku:true ,iqiyi:false,mangguo:false,url:"http://jiexi.071811.cc/jx2.php?url="},
+                {tengxun:false,youku:false,iqiyi:false,mangguo:true ,url:"http://www.917k.la/?url="},
+                {tengxun:false,youku:false,iqiyi:false,mangguo:true ,url:"https://api.653520.top/top/?url="},
+                
+                {tengxun:false,youku:false,iqiyi:false,mangguo:false,url:"http://app.baiyug.cn:2019/vip/search/iqiyi.php?url="},
+
+            ]});
+        }
+        componentDidMount() {
+            this.init();
+            
+            // console.log(this.getName("http://api.pucms.com/?url="));
+        }
+        init(){
+            var _searchs = this.parseUrl();
+            if (_searchs.u) {
+                var _allurl = this.uncompileStr(_searchs.u);
+                console.log(_allurl)
+                document.querySelectorAll('#node option').forEach(function (it, idx, all) {
+                    if (_allurl.indexOf(it.value) !== -1) {
+                        it.selected = true;
+                        document.getElementById("vurl").value = _allurl.substring(it.value.length);
+                    }
+                });
+                try {
+                    document.getElementById("videoIframe").src = _allurl;
+                } catch (e) {
+                    console.log(e);
+                }
+            }  
+        }
+        clickParse(){
+            var _urlRoot = document.getElementById("node").value;
+            var _vurl = document.getElementById("vurl").value;
+            var _url = _urlRoot + _vurl.trim();
+            for(var i=0;i<this.state.vipParser.length;i++){
+                var it=this.state.vipParser[i];
+                if(it.url==_urlRoot&&it.newTab){
+                    window.open(_url); 
+                    return;
+                }
+            }
+            window.location.href = "/vipparse.html?u=" + this.compileStr(_url);
+        }
+
+        parseUrl() {
+            var _searchs = window.location.search;
+            if (_searchs.length === 0) return {};
+            _searchs = _searchs.substring(1);
+            var _ss = _searchs.split("&");
+            var _params = {};
+            for (var i = 0; i < _ss.length; i++) {
+                var __o = _ss[i];
+                if (__o === "") continue;
+                var __os = __o.split("=");
+                _params[__os[0]] = __os[1];
+            }
+            return _params;
+        }
+
+        compileStr(code) {
+            var c = String.fromCharCode(code.charCodeAt(0) + code.length);
+            for (var i = 1; i < code.length; i++) {
+                c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1));
+            }
+            return escape(c);
+        }
+
+        uncompileStr(code) {
+            code = unescape(code);
+            var c = String.fromCharCode(code.charCodeAt(0) - code.length);
+            for (var i = 1; i < code.length; i++) {
+                c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));
+            }
+            return c;
+        }
+
+        showModel(e) {
+            if (this.state.isFull) {
+                document.getElementsByTagName("body")[0].setAttribute("class", "");
+                this.setState({isFull:false});
+                document.getElementById("compress").style = "display:none;";
+                document.getElementById("expand").style = "";
+            } else {
+                document.getElementsByTagName("body")[0].setAttribute("class", "videomodel");
+                this.setState({isFull:true});
+                document.getElementById("compress").style = "";
+                document.getElementById("expand").style = "display:none;";
+            }
+        }
+
+        getName(url){
+            url=url.replace("http://","").replace("https://","");
+            url=url.substring(0,url.indexOf("/"));
+            let arr=url.split(".");
+            if(arr.length==3){
+                return arr[1];
+            }else if(arr.length===2){
+                return arr[0];
+            }
+        }
+
+        render() {
+            return (
+                <div>
+                    <Navbar/>
+                    <div className={["pager", "pager-VIPJX"].join(" ")}>
+                        <div className="tip">
+                            <p>☺ -v- Jest with an ass and he will flap you in the face with his tail.</p>
+                        </div>
+
+                        <div className="videoIframediv">
+                            <iframe src="" className="videoIframe" id="videoIframe" frameBorder="no" border="0"
+                                    marginWidth="0" marginHeight="0" scrolling="no" allowtransparency="yes"/>
+                        </div>
+                        <div className="control">
+                            <div className="row">
+                                <select id="node" className="form-control col-3">
+                                    <optgroup label="常用 ţ ɣ ƛ ɧ ƚ">
+                                        {
+                                            this.state.vipParser.map(it=>(
+                                                <option value={it.url} key={it.url}>
+                                                {it.tengxun?'ţ':'_'}
+                                                _{it.youku?'ɣ':'_'}
+                                                _{it.iqiyi?'ӻ':'_'}
+                                                _{it.mangguo?'ɧ':'_'}
+                                                 &emsp;节点&emsp;{this.getName(it.url)}{it.newTab&&' +'}
+                                                </option>          
+                                            ))
+                                        }
+                                    </optgroup>
+                                </select>
+                                <div className="form-inline col-9 sm-nopading">
+                                    <input type="text" id="vurl" className="form-control col-9" placeholder="输入视频网址"/>
+                                    <div className="col-3 sm-nopading">
+                                        <button className="btn btn-outline-success col-7 magicbtns" onClick={this.clickParse.bind(this)}>解析</button>
+                                        <button className="btn btn-outline-info col-4 magicbtns" onClick={this.showModel.bind(this)} style={{padding: "4px 0", verticalAlign: "top"}}>
+                                            <svg id="expand" className="feather feather-maximize-2 sc-iwsKbI cnlcoQ"
+                                                 xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                                 viewBox="0 0 21 21" fill="none" stroke="currentColor" strokeWidth="2"
+                                                 strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+                                                 data-reactid="741">
+                                                <polyline points="15 3 21 3 21 9"/>
+                                                <polyline points="9 21 3 21 3 15"/>
+                                                <line x1="21" y1="3" x2="14" y2="10"/>
+                                                <line x1="3" y1="21" x2="10" y2="14"/>
+                                            </svg>
+                                            <svg id="compress" style={{display: "none"}}
+                                                 className="feather feather-minimize-2 sc-iwsKbI cnlcoQ"
+                                                 xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                                 viewBox="0 0 21 21" fill="none" stroke="currentColor" strokeWidth="2"
+                                                 strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+                                                 data-reactid="776">
+                                                <polyline points="4 14 10 14 10 20"/>
+                                                <polyline points="20 10 14 10 14 4"/>
+                                                <line x1="14" y1="10" x2="21" y2="3"/>
+                                                <line x1="3" y1="21" x2="10" y2="14"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <MainLayout/>,
+        document.querySelector('#root')
+    );
+</script>
+</html>

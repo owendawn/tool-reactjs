@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tool 工具集</title>
+    <link rel="icon" href="./ext/n.ico" type="image/x-icon"/>
+    <meta name="Keywords" content="金融解析,个人使用请勿用于商用传播">
+    <meta name="Description" content="金融解析,个人使用请勿用于商用传播">
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+
+    
+    <link rel="stylesheet" href="./ext/main.css">
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+</body>
+<script type="text/babel" src="./ext/navbar.js"></script>
+<script type="text/babel" src="./ext/tool.js"></script>
+<script type="text/babel">
+class MainLayout extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            type:(window.location.hash.replace("#",""))||"JRZH"
+        }   
+    }
+    urlChange(type) {
+        this.setState({type:type});
+        window.location.hash="#"+type;
+    }
+    render() {
+        return (
+            <div>
+                <Navbar urlChange={this.urlChange.bind(this)} />
+                <div className={["pager","page-"+this.state.type].join(" ")}>
+                    <div className="tip">
+                        <p>☺ -v- Jest with an ass and he will flap you in the face with his tail.</p>
+                    </div>
+                    {this.state.type==="JRZH"&&<JRZHContent/>}
+                    {this.state.type==="SPZGIF"&&<SPZGIFContent/>}
+                    {this.state.type==="CLZH"&&<CLZHContent/>}
+                </div>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+    <MainLayout />,
+    document.querySelector('#root')
+);
+</script>
+</html>
