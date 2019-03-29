@@ -59,3 +59,6 @@ body{margin:0;position: fixed;width:100%;height: 100%;}
 /* ========================================== 视频转换gif部分 ===================================================== */
 .page-SPZGIF .content{overflow: auto;}
 .page-SPZGIF .captures{overflow-x: auto; display: flex; padding: 5px 0;}
+
+/* ========================================== 视频转换gif部分 ===================================================== */
+.page-JWZH input{vertical-align: middle;line-height: 32px;}

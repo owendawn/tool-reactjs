@@ -60,6 +60,7 @@ class Navbar extends React.Component {
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a className="dropdown-item" onClick={this.urlChange.bind(this, "JRZH")}> 金 融 转 换 </a>
+                                <a className="dropdown-item" onClick={this.urlChange.bind(this, "JWZH")}> 经 纬 转 换 </a>
                                 <a className="dropdown-item" onClick={this.urlChange.bind(this, "SPZGIF")}>视频 转 GIF</a>
                                 <a className="dropdown-item" href="#">Another action</a>
                                 <div className="dropdown-divider"></div>

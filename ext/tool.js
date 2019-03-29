@@ -64,8 +64,8 @@ class CLZHContent extends React.Component {
     constructor(props) {
         super(props)
     }
-    componentWillMount(){
-        Tools.asyncLoadScripts([ "./ext/encrypt.util.js"]);
+    componentWillMount() {
+        Tools.asyncLoadScripts(["./ext/encrypt.util.js"]);
     }
     componentDidMount() {
         // var url='ed2k://|file|%E8%B6%8A%E7%8B%B1.Prison.Break.S05E08.%E4%B8%AD%E8%8B%B1%E5%AD%97%E5%B9%95.HDTVrip.720P-%E4%BA%BA%E4%BA%BA%E5%BD%B1%E8%A7%86V2.mp4|619162687|1551a1c5c2807796aaffee499a46f3bf|h=vk7qarwo76nmosnvbzlsfjx2k2myy32n|/';
@@ -86,6 +86,7 @@ class CLZHContent extends React.Component {
                 i.innerHTML = '✔';
                 i.setAttribute("class", "flag");
                 i.style = "font-weight:bolder;color:#e314e4;font-size:17pt;";
+                // console.log(i)
                 thedom.parentNode.appendChild(i);
                 setTimeout(function () {
                     // thedom.parentNode.removeChild(i);
@@ -109,7 +110,7 @@ class CLZHContent extends React.Component {
         });
         this.cleanCopyFlag();
     }
-   
+
     convert(isAnsi) {
 
         function ThunderEncode(t_url) {
@@ -290,6 +291,7 @@ class JRZHContent extends React.Component {
                 i.innerHTML = '✔';
                 i.setAttribute("class", "flag");
                 i.style = "font-weight:bolder;color:#e314e4;font-size:17pt;";
+                // console.log(i)
                 thedom.parentNode.appendChild(i);
                 setTimeout(function () {
                     // thedom.parentNode.removeChild(i);
@@ -492,6 +494,105 @@ class SPZGIFContent extends React.Component {
                 <div className="captures" ref="captures">
                 </div>
 
+            </div>
+        )
+    }
+}
+
+
+// ==================================== 经纬转换部分========================================
+class JWZHContent extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    componentDidMount() {
+        Tools.syncLoadScripts(["https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.js"], function () {
+            new Clipboard('.cp').on('success', function (e) {
+                var thedom = e.trigger;
+                var i = document.createElement("i");
+                i.innerHTML = '✔';
+                i.setAttribute("class", "flag");
+                i.style = "font-weight:bolder;color:#e314e4;font-size:17pt;";
+                // console.log(i)
+                thedom.parentNode.appendChild(i);
+                setTimeout(function () {
+                    // thedom.parentNode.removeChild(i);
+                }, 3000);
+                e.clearSelection();
+            });
+        });
+
+    }
+    changeToDFM() {
+        var du = document.getElementById("raw").value;
+        var str1 = du.split(".");
+        if(str1.length>2){
+            alert("异常数据");
+            return;
+        }
+        var du1 = str1[0];
+        var tp = "0." + str1[1]
+        var tp = String(tp * 60.00);		//这里进行了强制类型转换
+        var str2 = tp.split(".");
+        var fen = str2[0];
+        tp = "0." + (str2[1]||0);
+        tp = tp * 60;
+        var miao = tp;
+        document.getElementById("jwdfm").value = du1 + "°" + fen + "'" + miao + "\"";
+        document.getElementById("jwxs").value = du;
+    }
+
+    changeToDu() {
+        var d = document.getElementById("rawdu").value;
+        var f = document.getElementById("rawfen").value;
+        var m = document.getElementById("rawmiao").value;
+
+        var ff = parseFloat(f) + parseFloat(m / 60);
+        var du = parseFloat(ff / 60) + parseFloat(d);
+        document.getElementById("jwxs").value = du;
+        document.getElementById("jwdfm").value = d + "°" + f + "'" + m + "\"";
+    }
+
+    parseToDu(){
+        var all=document.getElementById("rawdu1").value;
+        var str1=all.trim().split("°");
+        document.getElementById("rawdu").value=str1[0];
+        var str2=str1[1].trim().split("'");
+        document.getElementById("rawfen").value=str2[0];
+        document.getElementById("rawmiao").value=str2[1].replace("\"","");
+    }
+    render() {
+        return (
+            <div className="content">
+                <div>
+                    <strong>经纬度</strong><small> （小&emsp;数）</small>：<input className="price jw-text" type="text" id="raw" />
+                    <button className="btn btn-success" onClick={this.changeToDFM.bind(this)}>转换</button>
+                </div>
+                <div style={{marginTop:'35px'}}>
+                    <strong>经纬度</strong><small> （度分秒）</small>：
+                    <input className="price dfm jw-text" type="text" id="rawdu1" /> 
+                    <button className="btn btn-success" onClick={this.parseToDu.bind(this)}>匹配</button>
+                </div>
+                <div style={{marginTop:'5px'}}>
+                    <strong>经纬度</strong><small> （度分秒）</small>：
+                    <input className="price dfm jw-text" type="number" id="rawdu" /> °&nbsp;
+                    <input className="price dfm jw-text" type="number" id="rawfen" /> '&nbsp;
+                    <input className="price dfm jw-text" type="number" id="rawmiao" /> "
+                    <button className="btn btn-success" onClick={this.changeToDu.bind(this)}>转换</button>
+                </div>
+                <hr />
+                <div>
+                    <strong>经纬度</strong><small> （小&emsp;数）</small>：<input className="price jw-text" type="text" id="jwxs" />
+                    <span>
+                        <button className="cp btn btn-primary" data-clipboard-target="#jwxs" aria-label="复制成功！">复制</button>
+                    </span>
+                </div>
+                <div style={{marginTop:'5px'}}>
+                    <strong>经纬度</strong><small> （度分秒）</small>：<input className="price jw-text" type="text" id="jwdfm" />
+                    <span>
+                        <button className="cp btn btn-primary" data-clipboard-target="#jwdfm" aria-label="复制成功！">复制</button>
+                    </span>
+                </div>
             </div>
         )
     }
